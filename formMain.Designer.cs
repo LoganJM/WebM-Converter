@@ -152,7 +152,7 @@
             // 
             // btnConvert
             // 
-            this.btnConvert.Location = new System.Drawing.Point(332, 91);
+            this.btnConvert.Location = new System.Drawing.Point(322, 91);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(75, 23);
             this.btnConvert.TabIndex = 9;
@@ -192,7 +192,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(159, 95);
+            this.label1.Location = new System.Drawing.Point(161, 95);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 13);
             this.label1.TabIndex = 0;
@@ -201,7 +201,7 @@
             // txtMaxSize
             // 
             this.txtMaxSize.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtMaxSize.Location = new System.Drawing.Point(225, 91);
+            this.txtMaxSize.Location = new System.Drawing.Point(223, 91);
             this.txtMaxSize.MaxLength = 4;
             this.txtMaxSize.Name = "txtMaxSize";
             this.txtMaxSize.Size = new System.Drawing.Size(69, 20);
@@ -212,7 +212,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(170, 122);
+            this.label6.Location = new System.Drawing.Point(172, 122);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 0;
@@ -226,7 +226,7 @@
             "Best",
             "Ultra",
             "Good"});
-            this.comboQuality.Location = new System.Drawing.Point(225, 118);
+            this.comboQuality.Location = new System.Drawing.Point(223, 118);
             this.comboQuality.Name = "comboQuality";
             this.comboQuality.Size = new System.Drawing.Size(69, 21);
             this.comboQuality.TabIndex = 8;
@@ -256,18 +256,18 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(332, 120);
+            this.btnClear.Location = new System.Drawing.Point(322, 120);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 12;
-            this.btnClear.Text = "Clear";
+            this.btnClear.Text = "Cl&ear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(175, 148);
+            this.label7.Location = new System.Drawing.Point(177, 148);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(37, 13);
             this.label7.TabIndex = 13;
@@ -276,7 +276,7 @@
             // checkAudio
             // 
             this.checkAudio.AutoSize = true;
-            this.checkAudio.Location = new System.Drawing.Point(252, 147);
+            this.checkAudio.Location = new System.Drawing.Point(250, 147);
             this.checkAudio.Name = "checkAudio";
             this.checkAudio.Size = new System.Drawing.Size(15, 14);
             this.checkAudio.TabIndex = 14;
@@ -284,7 +284,7 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(332, 149);
+            this.btnExit.Location = new System.Drawing.Point(322, 149);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 15;

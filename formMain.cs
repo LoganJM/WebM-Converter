@@ -21,7 +21,6 @@ namespace MasterOfWebM
         Regex verifyTimeStartAlt = new Regex(@"[0-6]\d[0-6]\d[0-6]\d");             // Regex to verify if txtStartTime is properly typed in without colons
         Regex verifyWidth = new Regex(@"^\d{1,4}");                                 // Regex to verify if txtWidth is properly typed in
         Regex verifyMaxSize = new Regex(@"^\d{1,4}");                               // Regex to verify if txtMaxSize is properly typed in
-        Regex verifyCrop = new Regex(@"^\d{1,4}:\d{1,4}:\d{1,4}:\d{1,4}");          // Regex to verify if txtCrop is properly typed in
 
         // ********************
         //      Functions
