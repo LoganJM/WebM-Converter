@@ -206,7 +206,7 @@
             this.txtMaxSize.Name = "txtMaxSize";
             this.txtMaxSize.Size = new System.Drawing.Size(69, 20);
             this.txtMaxSize.TabIndex = 6;
-            this.txtMaxSize.Text = "3";
+            this.txtMaxSize.Text = "3.8";
             this.txtMaxSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label6
@@ -223,9 +223,9 @@
             this.comboQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboQuality.FormattingEnabled = true;
             this.comboQuality.Items.AddRange(new object[] {
+            "Good",
             "Best",
-            "Ultra",
-            "Good"});
+            "Iterate"});
             this.comboQuality.Location = new System.Drawing.Point(223, 118);
             this.comboQuality.Name = "comboQuality";
             this.comboQuality.Size = new System.Drawing.Size(69, 21);

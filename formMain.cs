@@ -228,7 +228,7 @@ namespace MasterOfWebM
                         baseCommand = baseCommand.Replace("{quality}", "-quality best -auto-alt-ref 1 -lag-in-frames 16 -slices 8");
                         baseCommand = baseCommand.Replace("{bitrate}", bitrate.ToString() + "K");
                         break;
-                    case "Ultra":
+                    case "Iterate":
                         baseCommand = baseCommand.Replace("{quality}", "-quality best -auto-alt-ref 1 -lag-in-frames 16 -slices 8");
                         bitrate = Convert.ToDouble(bitrate) * 1024;
                         baseCommand = baseCommand.Replace("{bitrate}", bitrate.ToString());
@@ -285,7 +285,7 @@ namespace MasterOfWebM
                 }
                 else
                 {
-                    if (comboQuality.Text == "Ultra")
+                    if (comboQuality.Text == "Iterate")
                     {
                         /*
                          * Automatically attempt to create a smaller file
@@ -294,10 +294,10 @@ namespace MasterOfWebM
                          */
                         int passes = 0;
 
-                        while (fileSize > Convert.ToDouble(txtMaxSize.Text) * 1024 && passes <= 10)
+                        while (fileSize > Convert.ToDouble(txtMaxSize.Text) * 1024 && passes <= 5)
                         {
-                            // Lowers the bitrate by 1k
-                            bitrate -= 1000;
+                            // Lowers the bitrate by 2k
+                            bitrate -= 2000;
 
                             // Replacing the whole command just in case the file name contains the same numbers
                             baseCommand = baseCommand.Replace("-b:v " + (bitrate + 1000), "-b:v " + bitrate);
@@ -398,12 +398,10 @@ namespace MasterOfWebM
 
         private void comboQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
-        	//TODO: (LJM) refactor this to "Iterate"
-            if (comboQuality.Text == "Ultra")
-                MessageBox.Show("Ultra quality will try getting just under your\n" +
-                                "'Max Size'. This program will run ffmpeg up to 11 \n" +
-                                "times and currently there is no way of stopping it.\n\n" +
-                                "USE AT YOUR OWN RISK.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (comboQuality.Text == "Iterate")
+                MessageBox.Show("\"Iterate\" will try getting just under your\n" +
+                                "'Max Size'. This program will run ffmpeg up to 5 times.\n",
+                                "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void formMain_DragEnter(object sender, DragEventArgs e)
