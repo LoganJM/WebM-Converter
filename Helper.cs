@@ -18,7 +18,7 @@ namespace MasterOfWebM
         // Version check variables
         private static String downloadUrl = "";
         private static Version newVersion = null;
-        private static String xmlUrl = "https://raw.githubusercontent.com/MasterOfWebM/WebM-Converter/master/update.xml";
+        private static String xmlUrl = "https://raw.githubusercontent.com/LoganJM/WebM-Converter/master/update.xml";
         private static XmlTextReader reader = null;
 
         /// <summary>
