@@ -18,7 +18,7 @@ namespace MasterOfWebM
 
         Regex verifyLength = new Regex(@"^\d{1,3}");                                // Regex to verify if txtLength is properly typed in
         Regex verifyTimeStart = new Regex(@"^[0-6]\d:[0-6]\d:[0-6]\d");             // Regex to verify if txtStartTime is properly typed in
-        Regex verifyTimeStartAlt = new Regex(@"[0-6]\d[0-6]\d[0-6]\d");             // Regex to verify if txtStartTime is properly typed in without colons
+        Regex verifyTimeStartNoColon = new Regex(@"[0-6]\d[0-6]\d[0-6]\d");         // Regex to verify if txtStartTime is properly typed in without colons
         Regex verifyWidth = new Regex(@"^\d{1,4}");                                 // Regex to verify if txtWidth is properly typed in
         Regex verifyMaxSize = new Regex(@"^\d{1,4}");                               // Regex to verify if txtMaxSize is properly typed in
 
@@ -94,7 +94,7 @@ namespace MasterOfWebM
 
             // Validates if the user input a value for txtTimeStart
             // Seeing which format the input fits into.
-            if (verifyTimeStartAlt.IsMatch(txtTimeStart.Text))
+            if (verifyTimeStartNoColon.IsMatch(txtTimeStart.Text))
             {
                 string input = txtTimeStart.Text;
                 txtTimeStart.Text = input.Substring(0, 2) + ":" + input.Substring(2, 2) + ":" + input.Substring(4, 2);
