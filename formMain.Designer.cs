@@ -46,9 +46,7 @@
             this.lblThreads = new System.Windows.Forms.ToolStripStatusLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.txtMaxSize = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtCrop = new System.Windows.Forms.TextBox();
             this.comboQuality = new System.Windows.Forms.ComboBox();
             this.btnSubs = new System.Windows.Forms.Button();
             this.txtSubs = new System.Windows.Forms.TextBox();
@@ -56,8 +54,7 @@
             this.btnClear = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.checkAudio = new System.Windows.Forms.CheckBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtTitle = new System.Windows.Forms.TextBox();
+            this.btnExit = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,22 +82,20 @@
             // 
             this.txtOutput.Location = new System.Drawing.Point(75, 38);
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.ReadOnly = true;
-            this.txtOutput.Size = new System.Drawing.Size(216, 20);
+            this.txtOutput.Size = new System.Drawing.Size(332, 20);
             this.txtOutput.TabIndex = 2;
             // 
             // txtInput
             // 
             this.txtInput.Location = new System.Drawing.Point(75, 12);
             this.txtInput.Name = "txtInput";
-            this.txtInput.ReadOnly = true;
-            this.txtInput.Size = new System.Drawing.Size(216, 20);
+            this.txtInput.Size = new System.Drawing.Size(332, 20);
             this.txtInput.TabIndex = 1;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 146);
+            this.label5.Location = new System.Drawing.Point(29, 148);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 13);
             this.label5.TabIndex = 4;
@@ -108,7 +103,7 @@
             // 
             // txtWidth
             // 
-            this.txtWidth.Location = new System.Drawing.Point(75, 143);
+            this.txtWidth.Location = new System.Drawing.Point(77, 144);
             this.txtWidth.MaxLength = 4;
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(69, 20);
@@ -117,7 +112,7 @@
             // 
             // txtLength
             // 
-            this.txtLength.Location = new System.Drawing.Point(75, 117);
+            this.txtLength.Location = new System.Drawing.Point(77, 118);
             this.txtLength.MaxLength = 3;
             this.txtLength.Name = "txtLength";
             this.txtLength.Size = new System.Drawing.Size(69, 20);
@@ -127,7 +122,7 @@
             // txtTimeStart
             // 
             this.txtTimeStart.ForeColor = System.Drawing.Color.Silver;
-            this.txtTimeStart.Location = new System.Drawing.Point(75, 91);
+            this.txtTimeStart.Location = new System.Drawing.Point(77, 91);
             this.txtTimeStart.MaxLength = 8;
             this.txtTimeStart.Name = "txtTimeStart";
             this.txtTimeStart.Size = new System.Drawing.Size(69, 20);
@@ -140,7 +135,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 120);
+            this.label4.Location = new System.Drawing.Point(24, 122);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(43, 13);
             this.label4.TabIndex = 1;
@@ -149,7 +144,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 94);
+            this.label3.Location = new System.Drawing.Point(9, 95);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 0;
@@ -157,11 +152,11 @@
             // 
             // btnConvert
             // 
-            this.btnConvert.Location = new System.Drawing.Point(41, 200);
+            this.btnConvert.Location = new System.Drawing.Point(332, 91);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(75, 23);
             this.btnConvert.TabIndex = 9;
-            this.btnConvert.Text = "Convert";
+            this.btnConvert.Text = "&Convert";
             this.btnConvert.UseVisualStyleBackColor = true;
             this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
             // 
@@ -181,9 +176,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblThreads});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 231);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 183);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(303, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(418, 22);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
@@ -191,13 +186,13 @@
             // lblThreads
             // 
             this.lblThreads.Name = "lblThreads";
-            this.lblThreads.Size = new System.Drawing.Size(52, 17);
+            this.lblThreads.Size = new System.Drawing.Size(51, 17);
             this.lblThreads.Text = "Threads:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(156, 94);
+            this.label1.Location = new System.Drawing.Point(159, 95);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 13);
             this.label1.TabIndex = 0;
@@ -206,7 +201,7 @@
             // txtMaxSize
             // 
             this.txtMaxSize.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtMaxSize.Location = new System.Drawing.Point(222, 91);
+            this.txtMaxSize.Location = new System.Drawing.Point(225, 91);
             this.txtMaxSize.MaxLength = 4;
             this.txtMaxSize.Name = "txtMaxSize";
             this.txtMaxSize.Size = new System.Drawing.Size(69, 20);
@@ -214,36 +209,14 @@
             this.txtMaxSize.Text = "3";
             this.txtMaxSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(166, 120);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Crop:";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(161, 146);
+            this.label6.Location = new System.Drawing.Point(170, 122);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 0;
             this.label6.Text = "Quality:";
-            // 
-            // txtCrop
-            // 
-            this.txtCrop.ForeColor = System.Drawing.Color.Silver;
-            this.txtCrop.Location = new System.Drawing.Point(222, 117);
-            this.txtCrop.MaxLength = 19;
-            this.txtCrop.Name = "txtCrop";
-            this.txtCrop.Size = new System.Drawing.Size(69, 20);
-            this.txtCrop.TabIndex = 7;
-            this.txtCrop.Text = "o_w:o_h:x:y";
-            this.txtCrop.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtCrop.Enter += new System.EventHandler(this.txtCrop_Enter);
-            this.txtCrop.Leave += new System.EventHandler(this.txtCrop_Leave);
             // 
             // comboQuality
             // 
@@ -253,7 +226,7 @@
             "Best",
             "Ultra",
             "Good"});
-            this.comboQuality.Location = new System.Drawing.Point(222, 143);
+            this.comboQuality.Location = new System.Drawing.Point(225, 118);
             this.comboQuality.Name = "comboQuality";
             this.comboQuality.Size = new System.Drawing.Size(69, 21);
             this.comboQuality.TabIndex = 8;
@@ -273,8 +246,7 @@
             // 
             this.txtSubs.Location = new System.Drawing.Point(75, 64);
             this.txtSubs.Name = "txtSubs";
-            this.txtSubs.ReadOnly = true;
-            this.txtSubs.Size = new System.Drawing.Size(216, 20);
+            this.txtSubs.Size = new System.Drawing.Size(332, 20);
             this.txtSubs.TabIndex = 11;
             // 
             // subsFileDialog
@@ -284,7 +256,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(189, 199);
+            this.btnClear.Location = new System.Drawing.Point(332, 120);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 12;
@@ -295,7 +267,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(164, 172);
+            this.label7.Location = new System.Drawing.Point(175, 148);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(37, 13);
             this.label7.TabIndex = 13;
@@ -304,44 +276,35 @@
             // checkAudio
             // 
             this.checkAudio.AutoSize = true;
-            this.checkAudio.Location = new System.Drawing.Point(249, 172);
+            this.checkAudio.Location = new System.Drawing.Point(252, 147);
             this.checkAudio.Name = "checkAudio";
             this.checkAudio.Size = new System.Drawing.Size(15, 14);
             this.checkAudio.TabIndex = 14;
             this.checkAudio.UseVisualStyleBackColor = true;
             // 
-            // label8
+            // btnExit
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(21, 172);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(30, 13);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Title:";
-            // 
-            // txtTitle
-            // 
-            this.txtTitle.Location = new System.Drawing.Point(75, 170);
-            this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(69, 20);
-            this.txtTitle.TabIndex = 16;
-            this.txtTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.btnExit.Location = new System.Drawing.Point(332, 149);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(75, 23);
+            this.btnExit.TabIndex = 15;
+            this.btnExit.Text = "E&xit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // formMain
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(303, 253);
-            this.Controls.Add(this.txtTitle);
-            this.Controls.Add(this.label8);
+            this.ClientSize = new System.Drawing.Size(418, 205);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.checkAudio);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.txtSubs);
             this.Controls.Add(this.btnSubs);
             this.Controls.Add(this.comboQuality);
-            this.Controls.Add(this.txtCrop);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnOutput);
             this.Controls.Add(this.txtWidth);
@@ -353,7 +316,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnConvert);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtOutput);
@@ -392,9 +354,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtMaxSize;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtCrop;
         private System.Windows.Forms.ToolStripStatusLabel lblThreads;
         private System.Windows.Forms.ComboBox comboQuality;
         private System.Windows.Forms.Button btnSubs;
@@ -403,8 +363,7 @@
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkAudio;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtTitle;
+        private System.Windows.Forms.Button btnExit;
     }
 }
 

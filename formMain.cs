@@ -18,6 +18,7 @@ namespace MasterOfWebM
 
         Regex verifyLength = new Regex(@"^\d{1,3}");                                // Regex to verify if txtLength is properly typed in
         Regex verifyTimeStart = new Regex(@"^[0-6]\d:[0-6]\d:[0-6]\d");             // Regex to verify if txtStartTime is properly typed in
+        Regex verifyTimeStartAlt = new Regex(@"[0-6]\d[0-6]\d[0-6]\d");             // Regex to verify if txtStartTime is properly typed in without colons
         Regex verifyWidth = new Regex(@"^\d{1,4}");                                 // Regex to verify if txtWidth is properly typed in
         Regex verifyMaxSize = new Regex(@"^\d{1,4}");                               // Regex to verify if txtMaxSize is properly typed in
         Regex verifyCrop = new Regex(@"^\d{1,4}:\d{1,4}:\d{1,4}:\d{1,4}");          // Regex to verify if txtCrop is properly typed in
@@ -60,19 +61,24 @@ namespace MasterOfWebM
             btnConvert.Enabled = false;
 
             // Base command where each element gets replaced
-            String baseCommand = "-y {time1} -i \"{input}\" {time2} -t {length} -c:v libvpx -b:v {bitrate} {scale} -threads {threads} {metadata} {quality} {audio} ";
+            String baseCommand = "-y {time1} -i \"{input}\" {time2} -t {length} -c:v libvpx -b:v {bitrate} {scale} -threads {threads} {quality} {audio} ";
             String filterCommands = null;
 
-            // Verification boolean just incase the user messes up
-            bool verified = true;
+            // Verification boolean just in case the user messes up
+            bool noErrorsRaised = true;
             bool filters = false;
 
             double bitrate = 0;
 
+            if (!File.Exists(txtInput.Text))
+            {
+                noErrorsRaised = false;
+                MessageBox.Show("Given input file does not exist.", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             // Validates if the user input a value for txtInput
             if (txtInput.Text == "")
             {
-                verified = false;
+                noErrorsRaised = false;
                 MessageBox.Show("An input file needs to be selected", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
@@ -83,15 +89,33 @@ namespace MasterOfWebM
             // Validates if the user input a value for txtOutput
             if (txtOutput.Text == "")
             {
-                verified = false;
+                noErrorsRaised = false;
                 MessageBox.Show("An output file needs to be selected", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             // Validates if the user input a value for txtTimeStart
+            // Seeing which format the input fits into.
+            if (verifyTimeStartAlt.IsMatch(txtTimeStart.Text))
+            {
+                string input = txtTimeStart.Text;
+                txtTimeStart.Text = input.Substring(0, 2) + ":" + input.Substring(2, 2) + ":" + input.Substring(4, 2);
+            }
+
+            if (txtTimeStart.Text == "HH:MM:SS" || txtTimeStart.Text == "")
+            {
+                DialogResult confirmBlank = MessageBox.Show("The Start Time field was empty, do you want the clip to to\n"+
+                                                            "start at zero seconds?", "Start Time Confirmation", MessageBoxButtons.YesNo);
+                if (confirmBlank == DialogResult.Yes)
+                {
+                    txtTimeStart.Text = "00:00:00";
+                }
+            }
+
             if (!verifyTimeStart.IsMatch(txtTimeStart.Text))
             {
-                verified = false;
-                MessageBox.Show("The time format is messed up.\nPlease use HH:MM:SS", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                noErrorsRaised = false;
+                MessageBox.Show("The time format is messed up.\nPlease use HH:MM:SS", "Verification Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -123,28 +147,12 @@ namespace MasterOfWebM
             // Validates if the user input a value for txtLength
             if (!verifyLength.IsMatch(txtLength.Text))
             {
-                verified = false;
+                noErrorsRaised = false;
                 MessageBox.Show("The length of the video is not properly set", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 baseCommand = baseCommand.Replace("{length}", txtLength.Text);
-            }
-
-            // Validates if the user input a value for txtCrop
-            if (!verifyCrop.IsMatch(txtCrop.Text))
-            {
-                if (txtCrop.Text != "o_w:o_h:x:y")
-                {
-                    verified = false;
-                    MessageBox.Show("The crop field is not properly set\nSyntax:\nout_x:out_y:x:y\n\nout_x & out_y is the output size\nx & y are where you begin your crop",
-                        "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                filters = true;
-                filterCommands += filterCommands == null ? "crop=" + txtCrop.Text : ",crop=" + txtCrop.Text;
             }
 
             // Check if we need to add subtitles
@@ -170,7 +178,7 @@ namespace MasterOfWebM
             {
                 if (txtWidth.Text != "")
                 {
-                    verified = false;
+                    noErrorsRaised = false;
                     MessageBox.Show("The width is not properly set", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -183,7 +191,7 @@ namespace MasterOfWebM
             // Validates if the user input a value for txtMaxSize
             if (!verifyMaxSize.IsMatch(txtMaxSize.Text))
             {
-                verified = false;
+                noErrorsRaised = false;
                 MessageBox.Show("The maxium file size is not properly set", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
@@ -240,14 +248,8 @@ namespace MasterOfWebM
                 baseCommand = baseCommand.Replace(" {scale}", "");
             }
 
-            // Validates if the user input a value for txtTitle
-            if (txtTitle.Text != "")
-            {
-                baseCommand = baseCommand.Replace("{metadata}", string.Format("-metadata title=\"{0}\"", txtTitle.Text.Replace("\"", "\\\"")));
-            }
-
             // If everything is valid, continue with the conversion
-            if (verified)
+            if (noErrorsRaised)
             {
                 baseCommand = baseCommand.Replace("{threads}", THREADS);
 
@@ -373,33 +375,8 @@ namespace MasterOfWebM
                 btnConvert.Enabled = false;
             }
 
+			//TODO: (LJM) bind this method to my XML manifest
             Helper.checkUpdate();
-        }
-
-        // Handles when the user focuses txtCrop
-        private void txtCrop_Enter(object sender, EventArgs e)
-        {
-            txtCrop.Left -= 46;
-            txtCrop.Size = new System.Drawing.Size(115, 20);
-            txtCrop.ForeColor = Color.Black;
-
-            if (txtCrop.Text == "o_w:o_h:x:y")
-            {
-                txtCrop.Text = "";
-            }
-        }
-
-        // Handles when the user unfocuses txtCrop
-        private void txtCrop_Leave(object sender, EventArgs e)
-        {
-            txtCrop.Left += 46;
-            txtCrop.Size = new System.Drawing.Size(69, 20);
-
-            if (txtCrop.Text == "")
-            {
-                txtCrop.Text = "o_w:o_h:x:y";
-                txtCrop.ForeColor = Color.Silver;
-            }
         }
 
         private void btnSubs_Click(object sender, EventArgs e)
@@ -416,15 +393,13 @@ namespace MasterOfWebM
             txtTimeStart.Text = "HH:MM:SS";
             txtTimeStart.ForeColor = Color.Silver;
             txtMaxSize.Text = "3";
-            txtCrop.Text = "o_w:o_h:x:y";
-            txtCrop.ForeColor = Color.Silver;
-            txtTitle.Text = "";
             comboQuality.SelectedIndex = 0;
             checkAudio.Checked = false;
         }
 
         private void comboQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
+        	//TODO: (LJM) refactor this to "Iterate"
             if (comboQuality.Text == "Ultra")
                 MessageBox.Show("Ultra quality will try getting just under your\n" +
                                 "'Max Size'. This program will run ffmpeg up to 11 \n" +
@@ -449,6 +424,11 @@ namespace MasterOfWebM
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             txtInput.Text = files[0];
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
