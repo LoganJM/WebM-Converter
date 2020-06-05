@@ -10,21 +10,15 @@ namespace MasterOfWebM
 {
     public partial class formMain : Form
     {
-        // ********************
-        //      Variables
-        // ********************
         private String THREADS = Environment.ProcessorCount.ToString();             // Obtains the number of threads the computer has
         private String runningDirectory = AppDomain.CurrentDomain.BaseDirectory;    // Obtains the root directory
 
-        Regex verifyLength = new Regex(@"^\d{1,3}");                                // Regex to verify if txtLength is properly typed in
-        Regex verifyTimeStart = new Regex(@"^[0-6]\d:[0-6]\d:[0-6]\d");             // Regex to verify if txtStartTime is properly typed in
-        Regex verifyTimeStartNoColon = new Regex(@"[0-6]\d[0-6]\d[0-6]\d");         // Regex to verify if txtStartTime is properly typed in without colons
-        Regex verifyWidth = new Regex(@"^\d{1,4}");                                 // Regex to verify if txtWidth is properly typed in
-        Regex verifyMaxSize = new Regex(@"^\d{1,4}");                               // Regex to verify if txtMaxSize is properly typed in
+        private Regex verifyLength = new Regex(@"^\d{1,3}");                                // Regex to verify if txtLength is properly typed in
+        private Regex verifyTimeStart = new Regex(@"^[0-6]\d:[0-6]\d:[0-6]\d");             // Regex to verify if txtStartTime is properly typed in
+        private Regex verifyTimeStartNoColon = new Regex(@"[0-6]\d[0-6]\d[0-6]\d");         // Regex to verify if txtStartTime is properly typed in without colons
+        private Regex verifyWidth = new Regex(@"^\d{1,4}");                                 // Regex to verify if txtWidth is properly typed in
+        private Regex verifyMaxSize = new Regex(@"^\d{1,4}");                               // Regex to verify if txtMaxSize is properly typed in
 
-        // ********************
-        //      Functions
-        // ********************
         public formMain()
         {
             InitializeComponent();
