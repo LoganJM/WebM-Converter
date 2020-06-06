@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -235,7 +235,10 @@ namespace MasterOfWebM
 
             if (appVersion.CompareTo(newVersion) < 0)
             {
-                if (MessageBox.Show("You are currently out of date.\nWould you like to update now?", "Version out of date", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                DialogResult updateYesNo = MessageBox.Show("You are currently out of date.\nWould you like to update now?",
+                                                           "New Version Available",
+                                                           MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (updateYesNo == DialogResult.Yes)
                 {
                     var update = Process.Start(downloadUrl);
                 }
