@@ -207,13 +207,13 @@ namespace MasterOfWebM
                 int givenWidth = Convert.ToInt32(txtWidth.Text);
                 if (givenWidth%16 != 0)
                 {
-                    DialogResult widthWarnResult = MessageBox.Show(
-                         $"Your given frame width {txtWidth.Text}px is not a common factor of the 16:9 resolution. "
-                        + "Some common choices for clips include:\n\n   960 x 540\n   1280 x 720\n   1600 x 900\n\nSelecting a "
-                        + "common factor of 16:9 or a value divisible by 8 will help prevent scaling artifacts such as "
-                        + "green borders from forming during encoding. Do you want to continue with this width?",
-                        caption:"Width Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
-                    );
+                    string warnMessage = $"Your given frame width {txtWidth.Text}px is not a common factor of the 16:9 resolution."
+                    + " Some common choices for clips include:\n\n   960 x 540\n   1280 x 720\n   1600 x 900\n\nSelecting a common"
+                    + " factor of 16:9 or a value divisible by 8 will help prevent scaling artifacts such as green borders from"
+                    + " forming during encoding. Do you want to continue with this width?";
+
+                    DialogResult widthWarnResult = MessageBox.Show(warnMessage, caption: "Width Warning",
+                                                                   MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (widthWarnResult != DialogResult.Yes)
                     {
@@ -429,10 +429,10 @@ namespace MasterOfWebM
             txtInput.Text = txtOutput.Text = txtSubs.Text = txtLength.Text = txtWidth.Text = "";
             txtTimeStartHour.Text = "HH";
             txtTimeStartHour.ForeColor = Color.Silver;
-            txtTimeStartHour.Text = "MM";
-            txtTimeStartHour.ForeColor = Color.Silver;
-            txtTimeStartHour.Text = "SS";
-            txtTimeStartHour.ForeColor = Color.Silver;
+            txtTimeStartMinute.Text = "MM";
+            txtTimeStartMinute.ForeColor = Color.Silver;
+            txtTimeStartSecond.Text = "SS";
+            txtTimeStartSecond.ForeColor = Color.Silver;
             txtMaxSize.Text = "3.8";
             comboQuality.SelectedIndex = 0;
             checkAudio.Checked = false;
