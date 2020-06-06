@@ -15,7 +15,6 @@ namespace MasterOfWebM
 
         private Regex verifyLength = new Regex(@"^\d{1,3}");                                // Regex to verify if txtLength is properly typed in
         private Regex verifyTimeStart = new Regex(@"^[0-6]\d:[0-6]\d:[0-6]\d");             // Regex to verify if txtStartTime is properly typed in
-        private Regex verifyTimeStartNoColon = new Regex(@"[0-6]\d[0-6]\d[0-6]\d");         // Regex to verify if txtStartTime is properly typed in without colons
         private Regex verifyWidth = new Regex(@"^\d{1,4}");                                 // Regex to verify if txtWidth is properly typed in
         private Regex verifyMaxSize = new Regex(@"^\d{1,4}");                               // Regex to verify if txtMaxSize is properly typed in
 
@@ -25,28 +24,75 @@ namespace MasterOfWebM
         }
 
         // As soon as the user clicks on txtTimeStart, get rid of the informational text
-        private void txtTimeStart_Enter(object sender, EventArgs e)
+        private void SetControlTextActiveStyle(TextBox control, object sender, EventArgs e, string defaultText)
         {
-            if (txtTimeStart.Text == "HH:MM:SS")
+            if (control.Text == defaultText)
             {
-                txtTimeStart.Text = "";
-                txtTimeStart.ForeColor = Color.Black;
+                control.Text = "";
+                control.ForeColor = Color.Black;
             }
 
         }
 
         // Check if the user clicks away without typing anything into txtTimeStart
-        private void txtTimeStart_Leave(object sender, EventArgs e)
+        private void SetControlTextInactiveStyle(TextBox control, object sender, EventArgs e, string defaultText)
         {
-            if (txtTimeStart.Text == "")
+            if (control.Text == "")
             {
-                txtTimeStart.Text = "HH:MM:SS";
-                txtTimeStart.ForeColor = Color.Silver;
+                control.Text = defaultText;
+                control.ForeColor = Color.Silver;
+            }
+        }
+
+        private bool isValidStartTime(string timeString)
+        {
+            if(verifyTimeStart.IsMatch(timeString))
+            {
+                foreach (string timeChunk in timeString.Split(':'))
+                {
+                    if(Convert.ToInt32(timeChunk) > 60)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private string convertTimeChunk(string chunk, string defaultText)
+        {
+            if (chunk == defaultText)
+            {
+                return "00";
+            }
+            else
+            {
+                try
+                    {
+                        int num = Convert.ToInt32(chunk);
+                        return num.ToString("D2");
+                    }
+                catch (System.Exception)
+                    {
+                        return "??";
+                    }
             }
         }
 
         private void btnConvert_Click(object sender, EventArgs e)
         {
+            // Set up a time variable for this scope
+            string givenStartTime = convertTimeChunk(txtTimeStartHour.Text, "HH")
+                                  + ":"
+                                  + convertTimeChunk(txtTimeStartMinute.Text, "MM")
+                                  + ":"
+                                  + convertTimeChunk(txtTimeStartSecond.Text, "SS");
+            
             // Delete any existing temp subtitle file
             Helper.subsCheck();
 
@@ -58,20 +104,20 @@ namespace MasterOfWebM
             String filterCommands = null;
 
             // Verification boolean just in case the user messes up
-            bool noErrorsRaised = true;
+            bool ErrorRaised = false;
             bool filters = false;
 
             double bitrate = 0;
 
-            if (!File.Exists(txtInput.Text))
+            // Validates input file.
+            if (!File.Exists(txtInput.Text) && txtInput.Text != "")
             {
-                noErrorsRaised = false;
+                ErrorRaised = true;
                 MessageBox.Show("Given input file does not exist.", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            // Validates if the user input a value for txtInput
-            if (txtInput.Text == "")
+            else if (txtInput.Text == "")
             {
-                noErrorsRaised = false;
+                ErrorRaised = true;
                 MessageBox.Show("An input file needs to be selected", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
@@ -82,66 +128,48 @@ namespace MasterOfWebM
             // Validates if the user input a value for txtOutput
             if (txtOutput.Text == "")
             {
-                noErrorsRaised = false;
-                MessageBox.Show("An output file needs to be selected", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorRaised = true;
+                MessageBox.Show("An output file destination needs to be given.", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            // Validates if the user input a value for txtTimeStart
-            // Seeing which format the input fits into.
-            if (verifyTimeStartNoColon.IsMatch(txtTimeStart.Text))
+            // Validates txtTimeStart input text fields
+            if (!isValidStartTime(givenStartTime))
             {
-                string input = txtTimeStart.Text;
-                txtTimeStart.Text = input.Substring(0, 2) + ":" + input.Substring(2, 2) + ":" + input.Substring(4, 2);
-            }
-
-            if (txtTimeStart.Text == "HH:MM:SS" || txtTimeStart.Text == "")
-            {
-                DialogResult confirmBlank = MessageBox.Show("The Start Time field was empty, do you want the clip to to\n"+
-                                                            "start at zero seconds?", "Start Time Confirmation", MessageBoxButtons.YesNo);
-                if (confirmBlank == DialogResult.Yes)
-                {
-                    txtTimeStart.Text = "00:00:00";
-                }
-            }
-
-            if (!verifyTimeStart.IsMatch(txtTimeStart.Text))
-            {
-                noErrorsRaised = false;
-                MessageBox.Show("The time format is messed up.\nPlease use HH:MM:SS", "Verification Error",
+                ErrorRaised = true;
+                MessageBox.Show($"The time format \"{givenStartTime}\" is invalid.", "Verification Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                // Calculates the seconds from the time-code
-                double seconds = Helper.convertToSeconds(txtTimeStart.Text);
+                double secondsIntoVideo = Helper.convertToSeconds(givenStartTime);
 
-                if (seconds > 30)
+                if (secondsIntoVideo > 30)
                 {
                     if (txtSubs.Text == "")
                     {
-                        // If not subtitles exist
-                        baseCommand = baseCommand.Replace("{time1}", "-ss " + Convert.ToString(seconds - 30));
+                        // If no subtitles selected
+                        baseCommand = baseCommand.Replace("{time1}", "-ss " + Convert.ToString(secondsIntoVideo - 30));
                         baseCommand = baseCommand.Replace("{time2}", "-ss 30");
                     }
                     else
                     {
                         // If subtitles exist
                         baseCommand = baseCommand.Replace(" {time1}", "");
-                        baseCommand = baseCommand.Replace("{time2}", "-ss " + Convert.ToString(seconds));
+                        baseCommand = baseCommand.Replace("{time2}", "-ss " + Convert.ToString(secondsIntoVideo));
                     }
                 }
                 else
                 {
                     baseCommand = baseCommand.Replace(" {time1}", "");
-                    baseCommand = baseCommand.Replace("{time2}", "-ss " + seconds);
+                    baseCommand = baseCommand.Replace("{time2}", "-ss " + secondsIntoVideo);
                 }
             }
 
-            // Validates if the user input a value for txtLength
+            // Validates if the user input a valid value for txtLength
             if (!verifyLength.IsMatch(txtLength.Text))
             {
-                noErrorsRaised = false;
-                MessageBox.Show("The length of the video is not properly set", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorRaised = true;
+                MessageBox.Show("The length of the video is not properly set. (>1 and <300)", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -169,23 +197,21 @@ namespace MasterOfWebM
             // Validates if the user input a value for txtWidth
             if (!verifyWidth.IsMatch(txtWidth.Text))
             {
-                if (txtWidth.Text != "")
-                {
-                    noErrorsRaised = false;
-                    MessageBox.Show("The width is not properly set", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                ErrorRaised = true;
+                MessageBox.Show("The width is not properly set. \n(Should be over 1, under 9999)", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 filters = true;
-                filterCommands += filterCommands == null ? "scale=" + txtWidth.Text + ":-1" : ",scale=" + txtWidth.Text + ":-1";
+                // TODO: warn user when given width will result in a non-16:9 ratio.
+                filterCommands += (filterCommands == null) ? "scale=" + txtWidth.Text + ":-1" : ",scale=" + txtWidth.Text + ":-1";
             }
 
             // Validates if the user input a value for txtMaxSize
             if (!verifyMaxSize.IsMatch(txtMaxSize.Text))
             {
-                noErrorsRaised = false;
-                MessageBox.Show("The maxium file size is not properly set", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorRaised = true;
+                if (ErrorRaised)MessageBox.Show("The maxium file size is not properly set", "Verification Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -242,7 +268,7 @@ namespace MasterOfWebM
             }
 
             // If everything is valid, continue with the conversion
-            if (noErrorsRaised)
+            if (!ErrorRaised)
             {
                 baseCommand = baseCommand.Replace("{threads}", THREADS);
 
@@ -252,8 +278,10 @@ namespace MasterOfWebM
                 }
                 catch (Win32Exception ex)
                 {
-                    MessageBox.Show("It appears you are missing ffmpeg. Please\ngo obtain a copy of it, and put it in the same\nfolder as this executable.",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("You may not have ffmpeg installed. Please go\n"+
+                                    "obtain a copy of it, and put it in the same folder\n"+
+                                    "as this executable, or add the executable to your PATH\n"+
+                                    "environment variable.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Debug.WriteLine(ex);
                 }
 
@@ -322,7 +350,7 @@ namespace MasterOfWebM
                             }
                         }
                         else
-                            MessageBox.Show("Could not get the file size below " + txtMaxSize.Text + "MB.\n" +
+                            MessageBox.Show("Could not hit the file size target of " + txtMaxSize.Text + "MB.\n" +
                                 "Try using 'Best' quality, and if that doesn't work,\n" +
                                 "you must reduce your resolution and/or shorten the length.",
                                 "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -383,9 +411,9 @@ namespace MasterOfWebM
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtInput.Text = txtOutput.Text = txtSubs.Text = txtLength.Text = txtWidth.Text = "";
-            txtTimeStart.Text = "HH:MM:SS";
-            txtTimeStart.ForeColor = Color.Silver;
-            txtMaxSize.Text = "3";
+            txtTimeStartHour.Text = "HH:MM:SS";
+            txtTimeStartHour.ForeColor = Color.Silver;
+            txtMaxSize.Text = "3.8";
             comboQuality.SelectedIndex = 0;
             checkAudio.Checked = false;
         }
@@ -398,28 +426,39 @@ namespace MasterOfWebM
                                 "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void formMain_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
-
-        private void formMain_DragDrop(object sender, DragEventArgs e)
-        {
-            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            txtInput.Text = files[0];
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void txtTimeStartHour_Enter(object sender, EventArgs e)
+        {
+            SetControlTextActiveStyle(txtTimeStartHour, sender, e, "HH");
+        }
+
+        private void txtTimeStartHour_Leave(object sender, EventArgs e)
+        {
+            SetControlTextInactiveStyle(txtTimeStartHour, sender, e, "HH");
+        }
+
+        private void txtTimeStartMinute_Enter(object sender, EventArgs e)
+        {
+            SetControlTextActiveStyle(txtTimeStartMinute, sender, e, "MM");
+        }
+
+        private void txtTimeStartMinute_Leave(object sender, EventArgs e)
+        {
+            SetControlTextInactiveStyle(txtTimeStartMinute, sender, e, "MM");
+        }
+
+        private void txtTimeStartSecond_Enter(object sender, EventArgs e)
+        {
+            SetControlTextActiveStyle(txtTimeStartSecond, sender, e, "SS");
+        }
+
+        private void txtTimeStartSecond_Leave(object sender, EventArgs e)
+        {
+            SetControlTextInactiveStyle(txtTimeStartSecond, sender, e, "SS");
         }
     }
 }
