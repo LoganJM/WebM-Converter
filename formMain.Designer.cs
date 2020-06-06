@@ -97,7 +97,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(29, 173);
+            this.label5.Location = new System.Drawing.Point(39, 173);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 13);
             this.label5.TabIndex = 23;
@@ -105,7 +105,7 @@
             // 
             // txtWidth
             // 
-            this.txtWidth.Location = new System.Drawing.Point(76, 169);
+            this.txtWidth.Location = new System.Drawing.Point(86, 169);
             this.txtWidth.MaxLength = 4;
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(79, 20);
@@ -114,7 +114,7 @@
             // 
             // txtLength
             // 
-            this.txtLength.Location = new System.Drawing.Point(76, 137);
+            this.txtLength.Location = new System.Drawing.Point(86, 137);
             this.txtLength.MaxLength = 3;
             this.txtLength.Name = "txtLength";
             this.txtLength.Size = new System.Drawing.Size(79, 20);
@@ -124,7 +124,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 141);
+            this.label4.Location = new System.Drawing.Point(34, 141);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(43, 13);
             this.label4.TabIndex = 22;
@@ -133,7 +133,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 111);
+            this.label3.Location = new System.Drawing.Point(19, 111);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 21;
@@ -165,7 +165,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblThreads});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 212);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 207);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(437, 22);
             this.statusStrip1.SizingGrip = false;
@@ -181,7 +181,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(171, 111);
+            this.label1.Location = new System.Drawing.Point(181, 111);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 13);
             this.label1.TabIndex = 20;
@@ -190,7 +190,7 @@
             // txtMaxSize
             // 
             this.txtMaxSize.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtMaxSize.Location = new System.Drawing.Point(233, 107);
+            this.txtMaxSize.Location = new System.Drawing.Point(243, 107);
             this.txtMaxSize.MaxLength = 4;
             this.txtMaxSize.Name = "txtMaxSize";
             this.txtMaxSize.Size = new System.Drawing.Size(79, 20);
@@ -201,7 +201,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(182, 141);
+            this.label6.Location = new System.Drawing.Point(192, 141);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(42, 13);
             this.label6.TabIndex = 18;
@@ -215,7 +215,7 @@
             "Good",
             "Best",
             "Iterate"});
-            this.comboQuality.Location = new System.Drawing.Point(233, 137);
+            this.comboQuality.Location = new System.Drawing.Point(243, 137);
             this.comboQuality.Name = "comboQuality";
             this.comboQuality.Size = new System.Drawing.Size(79, 21);
             this.comboQuality.TabIndex = 12;
@@ -256,7 +256,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(187, 173);
+            this.label7.Location = new System.Drawing.Point(197, 173);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(37, 13);
             this.label7.TabIndex = 19;
@@ -265,7 +265,7 @@
             // checkAudio
             // 
             this.checkAudio.AutoSize = true;
-            this.checkAudio.Location = new System.Drawing.Point(265, 172);
+            this.checkAudio.Location = new System.Drawing.Point(275, 172);
             this.checkAudio.Name = "checkAudio";
             this.checkAudio.Size = new System.Drawing.Size(15, 14);
             this.checkAudio.TabIndex = 13;
@@ -284,7 +284,7 @@
             // txtTimeStartSecond
             // 
             this.txtTimeStartSecond.ForeColor = System.Drawing.Color.Silver;
-            this.txtTimeStartSecond.Location = new System.Drawing.Point(131, 107);
+            this.txtTimeStartSecond.Location = new System.Drawing.Point(141, 107);
             this.txtTimeStartSecond.Name = "txtTimeStartSecond";
             this.txtTimeStartSecond.Size = new System.Drawing.Size(24, 20);
             this.txtTimeStartSecond.TabIndex = 8;
@@ -296,7 +296,7 @@
             // txtTimeStartMinute
             // 
             this.txtTimeStartMinute.ForeColor = System.Drawing.Color.Silver;
-            this.txtTimeStartMinute.Location = new System.Drawing.Point(103, 107);
+            this.txtTimeStartMinute.Location = new System.Drawing.Point(113, 107);
             this.txtTimeStartMinute.Name = "txtTimeStartMinute";
             this.txtTimeStartMinute.Size = new System.Drawing.Size(24, 20);
             this.txtTimeStartMinute.TabIndex = 7;
@@ -308,7 +308,7 @@
             // txtTimeStartHour
             // 
             this.txtTimeStartHour.ForeColor = System.Drawing.Color.Silver;
-            this.txtTimeStartHour.Location = new System.Drawing.Point(76, 107);
+            this.txtTimeStartHour.Location = new System.Drawing.Point(86, 107);
             this.txtTimeStartHour.Name = "txtTimeStartHour";
             this.txtTimeStartHour.Size = new System.Drawing.Size(24, 20);
             this.txtTimeStartHour.TabIndex = 6;
@@ -322,7 +322,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(437, 234);
+            this.ClientSize = new System.Drawing.Size(437, 229);
             this.Controls.Add(this.txtTimeStartHour);
             this.Controls.Add(this.txtTimeStartMinute);
             this.Controls.Add(this.txtTimeStartSecond);

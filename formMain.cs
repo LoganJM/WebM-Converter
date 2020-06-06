@@ -92,7 +92,10 @@ namespace MasterOfWebM
                                   + convertTimeChunk(txtTimeStartMinute.Text, "MM")
                                   + ":"
                                   + convertTimeChunk(txtTimeStartSecond.Text, "SS");
-            
+
+            // Find subtitle extension
+            string subtitleExtension = (txtSubs.Text != "") ? Path.GetExtension(txtSubs.Text) : "";
+
             // Delete any existing temp subtitle file
             Helper.subsCheck();
 
@@ -179,18 +182,35 @@ namespace MasterOfWebM
             // Check if we need to add subtitles
             if (txtSubs.Text != "")
             {
-                switch (Path.GetExtension(txtSubs.Text))
+                if (!File.Exists(txtSubs.Text))
                 {
-                    case ".ass":
-                        filters = true;
-                        File.Copy(txtSubs.Text, runningDirectory + "subs.ass");
-                        filterCommands += filterCommands == null ? "ass=subs.ass" : ",ass=subs.ass";
-                        break;
-                    case ".srt":
-                        filters = true;
-                        File.Copy(txtSubs.Text, runningDirectory + "subs.srt");
-                        filterCommands += filterCommands == null ? "subtitles=subs.srt" : ",subtitles=subs.srt";
-                        break;
+                    ErrorRaised = true;
+                    MessageBox.Show($"The given subtitle path \"{txtSubs.Text}\" does not exist.", "Verification Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    switch (subtitleExtension)
+                    {
+                        case ".ass":
+                            filters = true;
+                            File.Copy(txtSubs.Text, runningDirectory + "subs.ass");
+                            filterCommands += (filterCommands == null) ? "ass=subs.ass" : ",ass=subs.ass";
+                            break;
+                        case ".srt":
+                            filters = true;
+                            File.Copy(txtSubs.Text, runningDirectory + "subs.srt");
+                            filterCommands += (filterCommands == null) ? "subtitles=subs.srt" : ",subtitles=subs.srt";
+                            break;
+                        default:
+                            filters = true;
+                            // TODO: Account for ffmpeg filter character escaping attrocities.
+                            // Source: https://superuser.com/questions/1247197
+                            // also,   https://superuser.com/questions/1242652  (less atrocious solution)
+                            File.Copy(txtSubs.Text, runningDirectory + "video.mkv");
+                            filterCommands += (filterCommands == null) ? $"subtitles=video{subtitleExtension}" : $",subtitles=video{subtitleExtension}";
+                            break;
+                    }
                 }
             }
 
@@ -203,9 +223,8 @@ namespace MasterOfWebM
             else
             {
                 filters = true;
-                // TODO: warn user when given width will result in a non-16:9 ratio.
                 int givenWidth = Convert.ToInt32(txtWidth.Text);
-                if (givenWidth%16 != 0)
+                if (givenWidth % 16 != 0)
                 {
                     string warnMessage = $"Your given frame width {txtWidth.Text}px is not a common factor of the 16:9 resolution."
                     + " Some common choices for clips include:\n\n   960 x 540\n   1280 x 720\n   1600 x 900\n\nSelecting a common"
@@ -220,7 +239,7 @@ namespace MasterOfWebM
                         ErrorRaised = true;
                     }
                 }
-                filterCommands += (filterCommands == null) ? "scale=" + txtWidth.Text + ":-1" : ",scale=" + txtWidth.Text + ":-1";
+                filterCommands += (filterCommands == null) ? $"scale={txtWidth.Text}:-1" : $",scale={txtWidth.Text}:-1";
             }
 
             // Validates if the user input a value for txtMaxSize
@@ -309,13 +328,16 @@ namespace MasterOfWebM
                     txtOutput.Text = "";
                     if (txtSubs.Text != "")
                     {
-                        switch (Path.GetExtension(txtSubs.Text))
+                        switch (subtitleExtension)
                         {
                             case ".ass":
-                                File.Delete(runningDirectory + "\\subs.ass");
+                                File.Delete(runningDirectory + "subs.ass");
                                 break;
                             case ".srt":
-                                File.Delete(runningDirectory + "\\subs.srt");
+                                File.Delete(runningDirectory + "subs.srt");
+                                break;
+                            default:
+                                File.Delete(runningDirectory + $"video{subtitleExtension}");
                                 break;
                         }
                         txtSubs.Text = "";
@@ -353,13 +375,16 @@ namespace MasterOfWebM
 
                             if (txtSubs.Text != "")
                             {
-                                switch (Path.GetExtension(txtSubs.Text))
+                                switch (subtitleExtension)
                                 {
                                     case ".ass":
                                         File.Delete(runningDirectory + "\\subs.ass");
                                         break;
                                     case ".srt":
                                         File.Delete(runningDirectory + "\\subs.srt");
+                                        break;
+                                    default:
+                                        File.Delete(runningDirectory + $"\\video{subtitleExtension}");
                                         break;
                                 }
                                 txtSubs.Text = "";
