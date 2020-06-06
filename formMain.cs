@@ -86,7 +86,7 @@ namespace MasterOfWebM
 
         private void btnConvert_Click(object sender, EventArgs e)
         {
-            // Set up a time variable for this scope
+            // Set up a time string variable for this scope
             string givenStartTime = convertTimeChunk(txtTimeStartHour.Text, "HH")
                                   + ":"
                                   + convertTimeChunk(txtTimeStartMinute.Text, "MM")
@@ -204,6 +204,22 @@ namespace MasterOfWebM
             {
                 filters = true;
                 // TODO: warn user when given width will result in a non-16:9 ratio.
+                int givenWidth = Convert.ToInt32(txtWidth.Text);
+                if (givenWidth%16 != 0)
+                {
+                    DialogResult widthWarnResult = MessageBox.Show(
+                         $"Your given frame width {txtWidth.Text}px is not a common factor of the 16:9 resolution. "
+                        + "Some common choices for clips include:\n\n   960 x 540\n   1280 x 720\n   1600 x 900\n\nSelecting a "
+                        + "common factor of 16:9 or a value divisible by 8 will help prevent scaling artifacts such as "
+                        + "green borders from forming during encoding. Do you want to continue with this width?",
+                        caption:"Width Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+                    );
+
+                    if (widthWarnResult != DialogResult.Yes)
+                    {
+                        ErrorRaised = true;
+                    }
+                }
                 filterCommands += (filterCommands == null) ? "scale=" + txtWidth.Text + ":-1" : ",scale=" + txtWidth.Text + ":-1";
             }
 
@@ -397,7 +413,7 @@ namespace MasterOfWebM
             }
 
 			//TODO: (LJM) bind this method to my XML manifest
-            Helper.checkUpdate();
+            //Helper.checkUpdate();
         }
 
         private void btnSubs_Click(object sender, EventArgs e)
@@ -411,7 +427,11 @@ namespace MasterOfWebM
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtInput.Text = txtOutput.Text = txtSubs.Text = txtLength.Text = txtWidth.Text = "";
-            txtTimeStartHour.Text = "HH:MM:SS";
+            txtTimeStartHour.Text = "HH";
+            txtTimeStartHour.ForeColor = Color.Silver;
+            txtTimeStartHour.Text = "MM";
+            txtTimeStartHour.ForeColor = Color.Silver;
+            txtTimeStartHour.Text = "SS";
             txtTimeStartHour.ForeColor = Color.Silver;
             txtMaxSize.Text = "3.8";
             comboQuality.SelectedIndex = 0;
