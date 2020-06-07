@@ -1,4 +1,16 @@
-# ORIGINAL README - (NOT LINEJUMPR'S)
+# Fork Info
+
+This fork has been made to incorporate some basic udpates to the GUI for convienence and also for some minor new features (e.g. using a video file as a subtitle source)
+
+## Download
+- The current release for the webm converter can be found here: [Download v1.2.0](https://github.com/LoganJM/WebM-Converter/releases/download/v1.2/Master.of.Webm-v1.2.zip)
+
+- If you need to download ffmpeg, you can get it [here](https://ffmpeg.org/download.html).
+
+<hr />
+
+# ORIGINAL README - (NOT MINE)
+
 
 ## !WebM.y.TsM's WebM Converter
 This is a simple wrapper for [FFmpeg](http://www.ffmpeg.org/download.html) to create WebM files. My version is generally among the best, due to my experience with encoding videos for years. To download it, please click [here](https://github.com/MasterOfWebM/WebM-Converter/releases/download/v1.1/Release_v1.1.zip).
