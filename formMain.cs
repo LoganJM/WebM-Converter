@@ -73,14 +73,14 @@ namespace MasterOfWebM
             else
             {
                 try
-                    {
-                        int num = Convert.ToInt32(chunk);
-                        return num.ToString("D2");
-                    }
+                {
+                    int num = Convert.ToInt32(chunk);
+                    return num.ToString("D2");
+                }
                 catch (System.Exception)
-                    {
-                        return "??";
-                    }
+                {
+                    return "??";
+                }
             }
         }
 
@@ -262,8 +262,8 @@ namespace MasterOfWebM
                 // If audio is requested
                 if (checkAudio.Checked)
                 {
-                    // TODO: Give bitrate options for audio (currently enforcing 48k)
-                    // TODO: Disable audio encoding on first pass to speed up encoding
+                    // TODO: (old) Give bitrate options for audio (currently enforcing 48k)
+                    // TODO: (old) Disable audio encoding on first pass to speed up encoding
                     bitrate -= 48;
                     baseCommand = baseCommand.Replace("{audio}", "-c:a libvorbis -b:a 48k");
                 }
@@ -437,8 +437,8 @@ namespace MasterOfWebM
                 btnConvert.Enabled = false;
             }
 
-			//TODO: (LJM) bind this method to my XML manifest
-            //Helper.checkUpdate();
+            //TODO: Bind this method to my XML manifest
+            // Helper.checkUpdate();
         }
 
         private void btnSubs_Click(object sender, EventArgs e)
