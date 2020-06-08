@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -186,7 +186,7 @@ namespace MasterOfWebM
                 {
                     ErrorRaised = true;
                     MessageBox.Show($"The given subtitle path \"{txtSubs.Text}\" does not exist.", "Verification Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
