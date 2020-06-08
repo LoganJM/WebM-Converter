@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -254,6 +254,14 @@ namespace MasterOfWebM
             else if (File.Exists("subs.srt"))
             {
                 File.Delete("subs.srt");
+            }
+            else if (File.Exists("video.mkv"))
+            {
+                File.Delete("subs.mkv");
+            }
+            else if (File.Exists("video.mp4"))
+            {
+                File.Delete("subs.mp4");
             }
         }
     }

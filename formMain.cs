@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -204,9 +204,7 @@ namespace MasterOfWebM
                             break;
                         default:
                             filters = true;
-                            // TODO: Account for ffmpeg filter character escaping attrocities.
-                            // Source: https://superuser.com/questions/1247197
-                            // also,   https://superuser.com/questions/1242652  (less atrocious solution)
+                            // HACK: Due to the limitations of FFPMEPG, it seems this is the only viable solution. 
                             File.Copy(txtSubs.Text, runningDirectory + "video.mkv");
                             filterCommands += (filterCommands == null) ? $"subtitles=video{subtitleExtension}" : $",subtitles=video{subtitleExtension}";
                             break;
@@ -378,13 +376,13 @@ namespace MasterOfWebM
                                 switch (subtitleExtension)
                                 {
                                     case ".ass":
-                                        File.Delete(runningDirectory + "\\subs.ass");
+                                        File.Delete(runningDirectory + "subs.ass");
                                         break;
                                     case ".srt":
-                                        File.Delete(runningDirectory + "\\subs.srt");
+                                        File.Delete(runningDirectory + "subs.srt");
                                         break;
                                     default:
-                                        File.Delete(runningDirectory + $"\\video{subtitleExtension}");
+                                        File.Delete(runningDirectory + $"video{subtitleExtension}");
                                         break;
                                 }
                                 txtSubs.Text = "";
